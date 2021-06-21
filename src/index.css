@@ -10,6 +10,7 @@ body {
   color: #fff;
 }
 .display {
+  position: relative;
   font-family: bpdotsregular;
   background-color: #000;
   width: 350px;
@@ -19,6 +20,10 @@ body {
   padding-left: 5px;
   padding-right: 5px;
   overflow: hidden;
+}
+.carousel:hover {
+  transform: translate(0px, -60px);
+  transition: all 3s linear;
 }
 .bus {
   display: flex;
