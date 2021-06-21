@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Cabecera } from "./components/Cabecera";
 import { FormularioBusquedaParada } from "./components/FormularioBusquedaParada";
+import { FormularioTiempoLinea } from "./components/FormularioTiempoLinea";
 
 function App() {
   const numeroParada = 151;
@@ -67,14 +68,7 @@ function App() {
       <Cabecera paradas={paradas} paradaSeleccionada={paradaSeleccionada} />
       <section className="forms">
         <FormularioBusquedaParada getParadas={getParadas} />
-        <form>
-          <label htmlFor="tiempo-linea">
-            Tiempo para que llegue la línea:{" "}
-          </label>
-          <select id="tiempo-linea">
-            <option value="">Elige línea</option>
-          </select>
-        </form>
+        <FormularioTiempoLinea/>
       </section>
       {/* <header className="cabecera">
         <h2>Bus 109 - Hospital Clínic / Polígon Zona Franca</h2>
