@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Cabecera } from "./components/Cabecera";
+import { FormularioBusquedaParada } from "./components/FormularioBusquedaParada";
 
 function App() {
   const numeroParada = 151;
@@ -7,19 +8,6 @@ function App() {
   const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
   const appId = "47477a69";
   const appKey = "47f5463a34dce827b9368dc2e35202f5";
-
-  const existeParada = async (urlAPI, appid, appkey, numeroParada) => {
-    const response = await fetch(
-      `${APIparada}${numeroParada}?app_id=${appId}&app_key=${appKey}`
-    );
-
-    const json = await response.json();
-
-    if (json.totalFeatures === 0) {
-      return false;
-    }
-    return true;
-  };
 
   const paradas = [
     {
@@ -47,18 +35,40 @@ function App() {
       "t-in-min": 21,
     },
   ];
-
   const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
+  const existeParada = async (urlAPI, appId, appKey, numeroParada) => {
+    const response = await fetch(
+      `${urlAPI}${numeroParada}?app_id=${appId}&app_key=${appKey}`
+    );
+
+    const json = await response.json();
+
+    if (json.totalFeatures === 0) {
+      return false;
+    }
+    return true;
+  };
+  const getParadas = async (e, parada) => {
+    e.preventDefault();
+    const resultado = await existeParada(
+      APIExisteParada,
+      appId,
+      appKey,
+      parada
+    );
+
+    console.log(
+      resultado
+        ? "aqui tienes la parada " + parada
+        : "no existe la parada " + parada
+    );
+  };
 
   return (
     <div className="contenedor">
       <Cabecera paradas={paradas} paradaSeleccionada={paradaSeleccionada} />
       <section className="forms">
-        <form>
-          <label htmlFor="num-parada">Parada nº: </label>
-          <input type="number" id="num-parada" />
-          <button type="submit">Buscar</button>
-        </form>
+        <FormularioBusquedaParada getParadas={getParadas} />
         <form>
           <label htmlFor="tiempo-linea">
             Tiempo para que llegue la línea:{" "}
