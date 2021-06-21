@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Cabecera } from "./components/Cabecera";
 
 function App() {
@@ -28,6 +28,24 @@ function App() {
       "t-in-min": 21,
     },
   ];
+
+  const numeroParada = 151;
+  // const APIparada = `https://api.tmb.cat/v1/ibus/stops/${numeroParada}?app_id=47477a69&app_key=47f5463a34dce827b9368dc2e35202f5`;
+  const APIparada = "https://api.tmb.cat/v1/ibus/stops/";
+  const appId = "47477a69";
+  const appKey = "47f5463a34dce827b9368dc2e35202f5";
+  const ParadasTMB = async (urlAPI, numparada, appId, appKey) => {
+    const direccionURL =
+      urlAPI + numparada + "?app_id=" + appId + "&app_key=" + appKey;
+    const resp = await fetch(direccionURL);
+    const Paradas = await resp.json();
+    console.log(Paradas.data.ibus);
+    return Paradas.data.ibus;
+  };
+  useEffect(
+    () => ParadasTMB(APIparada, numeroParada, appId, appKey),
+    [APIparada, numeroParada, appId, appKey]
+  );
 
   const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
 
@@ -64,7 +82,6 @@ function App() {
           <li className="parada">Parada nº 1643: Mercabarna - Mercat del Peix (<a href="#">ver mapa</a>)</li>
         </ul>
       </section> */}
-      
     </div>
   );
 }
