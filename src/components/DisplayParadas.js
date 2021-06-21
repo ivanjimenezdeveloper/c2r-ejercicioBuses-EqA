@@ -1,6 +1,18 @@
-export const DisplayParadas = (props) => {
-  const { routeId, line, destination, time } = props;
-  const paradas = [
+import { useState, useEffect, useRef } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+
+
+import { useState, useEffect, useRef } from "react";
+
+export const DisplayParadas = (props) => { 
+
+  const [posicion, setPosicion] = useState("0");
+  useEffect(() => {
+    setTimeout(() => setPosicion("-60px"), 2000);
+  }, []);
+
+    const paradas = [
+
     {
       routeId: "0681",
       line: "68",
@@ -24,28 +36,34 @@ export const DisplayParadas = (props) => {
       "t-in-s": 1288,
       destination: "Pl. Catalunya",
       "t-in-min": 21,
-    },
-  ];
 
-  return (
-    <>
-      <h1>{routeId}</h1>
-      <div className="display">
-        <div className="bus">
-          <span className="linea">{line}</span>
-          <span className="destino">{destination}</span>
-          <span className="tiempo">10min</span>
-        </div>
-      </div>
-      {paradas.map((parada) => (
-        <h1>{parada.routeId}</h1>
-      ))}
-      {paradas.map((parada) => (
-        <span className="linea">{parada.routeId}</span>
-      ))}
-      {paradas.map((parada) => (
-        <span className="destino">{parada.destination}</span>
-      ))}
-    </>
-  );
-};
+    }
+      ];
+
+     return (
+
+            <header className="cabecera">
+                <h1>Parada nº{paradas.routeId}</h1> 
+                <div className="display"> 
+                  <div className="carousel" style={{
+                                            top: posicion.current,
+                                            }}>
+                        {paradas.map((paradas) => <<<<<<< feature/displaymove
+43
+ 
+
+                        <div className="bus">
+                              <span className="linea">{paradas.line}</span>
+                              <span className="destino">{paradas.destination}</span>
+                              <span className="tiempo">{paradas["t-in-min"]}min</span>
+                          </div>
+                        )}
+                  </div>
+                </div>
+            </header>   
+            
+     );
+    };
+
+
+
