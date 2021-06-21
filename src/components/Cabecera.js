@@ -1,4 +1,7 @@
+import { TiempoLinea } from "./TiempoLinea";
+
 export const Cabecera = (props) => {
+  const { paradas, paradaSeleccionada } = props;
   return (
     <header className="cabecera">
       <h1>Parada nº 15</h1>
@@ -19,7 +22,7 @@ export const Cabecera = (props) => {
           <span className="tiempo">4min</span>
         </div>
       </div>
-      <h2>Tiempo para la línea 60: 2 minutos</h2>
+      <TiempoLinea />
     </header>
   );
 };
