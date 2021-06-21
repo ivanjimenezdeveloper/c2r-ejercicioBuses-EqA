@@ -27,15 +27,15 @@ export const Cabecera = (props) => {
   }, [getTiempoEspera, paradas, paradaSeleccionada]);
 
   return (
-
     <header className="cabecera">
-      {paradas[0].routeId !== "" && <DisplayParadas paradas={paradas} />}
+      {paradas[0].routeId !== undefined && paradas[0].routeId !== "" && (
+        <DisplayParadas paradas={paradas} />
+      )}
       <TiempoLinea
         paradaSeleccionada={paradaSeleccionada}
         tiempoEspera={tiempoEspera}
       />
     </header>
-
   );
 };
 
