@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { TiempoLinea } from "./TiempoLinea";
+
+import { DisplayParadas } from "./DisplayParadas";
+
 import PropTypes from "prop-types";
+
 
 export const Cabecera = (props) => {
   const { paradas, paradaSeleccionada } = props;
@@ -19,6 +23,10 @@ export const Cabecera = (props) => {
   );
 
   return (
+
+      <DisplayParadas paradas={paradas}/>
+      <TiempoLinea />
+
     <header className="cabecera">
       <h1>Parada nº 15</h1>
       <div className="display">
@@ -43,6 +51,7 @@ export const Cabecera = (props) => {
         tiempoEspera={tiempoEspera}
       />
     </header>
+
   );
 };
 

@@ -64,6 +64,7 @@ function App() {
           <li className="parada">Parada nº 1643: Mercabarna - Mercat del Peix (<a href="#">ver mapa</a>)</li>
         </ul>
       </section> */}
+      
     </div>
   );
 }
