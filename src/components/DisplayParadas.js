@@ -2,11 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 
+import { useState, useEffect, useRef } from "react";
+
 export const DisplayParadas = (props) => { 
+
   const [posicion, setPosicion] = useState("0");
   useEffect(() => {
     setTimeout(() => setPosicion("-60px"), 2000);
   }, []);
+
     const paradas = [
 
     {
@@ -44,7 +48,10 @@ export const DisplayParadas = (props) => {
                   <div className="carousel" style={{
                                             top: posicion.current,
                                             }}>
-                        {paradas.map((paradas) => 
+                        {paradas.map((paradas) => <<<<<<< feature/displaymove
+43
+ 
+
                         <div className="bus">
                               <span className="linea">{paradas.line}</span>
                               <span className="destino">{paradas.destination}</span>
@@ -57,5 +64,6 @@ export const DisplayParadas = (props) => {
             
      );
     };
+
 
 
