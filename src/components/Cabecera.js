@@ -22,12 +22,14 @@ export const Cabecera = (props) => {
   );
 
   return (
+
     <header className="cabecera">
       <DisplayParadas paradas={paradas} />
       <TiempoLinea
         paradaSeleccionada={paradaSeleccionada}
         tiempoEspera={tiempoEspera}/>
     </header>
+    </>
 
   );
 };
