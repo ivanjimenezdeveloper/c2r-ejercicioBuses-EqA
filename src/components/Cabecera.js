@@ -23,7 +23,7 @@ export const Cabecera = (props) => {
   );
 
   return (
-
+   <>
       <DisplayParadas paradas={paradas}/>
       <TiempoLinea />
 
@@ -51,6 +51,7 @@ export const Cabecera = (props) => {
         tiempoEspera={tiempoEspera}
       />
     </header>
+    </>
 
   );
 };
