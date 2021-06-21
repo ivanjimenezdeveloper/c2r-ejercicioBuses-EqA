@@ -1,9 +1,11 @@
+
 import { useState, useEffect, useRef } from "react";
 
 export const DisplayParadas = (props) => { 
   const timer = useRef(null);
    const {routeId, line, destination, time} = props;
     const paradas = [
+
     {
       routeId: "0681",
       line: "68",
@@ -27,6 +29,7 @@ export const DisplayParadas = (props) => {
       "t-in-s": 1288,
       destination: "Pl. Catalunya",
       "t-in-min": 21,
+
     }
       ];
       

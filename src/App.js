@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Cabecera } from "./components/Cabecera";
+import { FormularioBusquedaParada } from "./components/FormularioBusquedaParada";
 
 function App() {
+  const numeroParada = 151;
+  const APIparada = "https://api.tmb.cat/v1/ibus/stops/";
+  const appId = "47477a69";
+  const appKey = "47f5463a34dce827b9368dc2e35202f5";
+  const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
+  const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
+
+
   const paradas = [
     {
       routeId: "0681",
@@ -29,17 +38,54 @@ function App() {
     },
   ];
 
-  const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
+  const ParadasTMB = async (urlAPI, numparada, appId, appKey) => {
+    const direccionURL =
+      urlAPI + numparada + "?app_id=" + appId + "&app_key=" + appKey;
+    const resp = await fetch(direccionURL);
+    const Paradas = await resp.json();
+    console.log(Paradas.data.ibus);
+    return Paradas.data.ibus;
+  };
+  
+  useEffect(
+    () => ParadasTMB(APIparada, numeroParada, appId, appKey),
+    [APIparada, numeroParada, appId, appKey]
+  );
+
+  const existeParada = async (urlAPI, appId, appKey, numeroParada) => {
+    const response = await fetch(
+      `${urlAPI}${numeroParada}?app_id=${appId}&app_key=${appKey}`
+    );
+
+    const json = await response.json();
+
+    if (json.totalFeatures === 0) {
+      return false;
+    }
+    return true;
+  };
+  
+  const getParadas = async (e, parada) => {
+    e.preventDefault();
+    const resultado = await existeParada(
+      APIExisteParada,
+      appId,
+      appKey,
+      parada
+    );
+
+    console.log(
+      resultado
+        ? "aqui tienes la parada " + parada
+        : "no existe la parada " + parada
+    );
+  };
 
   return (
     <div className="contenedor">
       <Cabecera paradas={paradas} paradaSeleccionada={paradaSeleccionada} />
       <section className="forms">
-        <form>
-          <label htmlFor="num-parada">Parada nº: </label>
-          <input type="number" id="num-parada" />
-          <button type="submit">Buscar</button>
-        </form>
+        <FormularioBusquedaParada getParadas={getParadas} />
         <form>
           <label htmlFor="tiempo-linea">
             Tiempo para que llegue la línea:{" "}
@@ -64,7 +110,6 @@ function App() {
           <li className="parada">Parada nº 1643: Mercabarna - Mercat del Peix (<a href="#">ver mapa</a>)</li>
         </ul>
       </section> */}
-      
     </div>
   );
 }
