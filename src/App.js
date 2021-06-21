@@ -2,6 +2,25 @@ import { useState } from "react";
 import { Cabecera } from "./components/Cabecera";
 
 function App() {
+  const numeroParada = 151;
+  const APIparada = "https://api.tmb.cat/v1/ibus/stops/";
+  const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
+  const appId = "47477a69";
+  const appKey = "47f5463a34dce827b9368dc2e35202f5";
+
+  const existeParada = async (urlAPI, appid, appkey, numeroParada) => {
+    const response = await fetch(
+      `${APIparada}${numeroParada}?app_id=${appId}&app_key=${appKey}`
+    );
+
+    const json = await response.json();
+
+    if (json.totalFeatures === 0) {
+      return false;
+    }
+    return true;
+  };
+
   const paradas = [
     {
       routeId: "0681",
