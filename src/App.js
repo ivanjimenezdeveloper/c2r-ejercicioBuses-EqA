@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Cabecera } from "./components/Cabecera";
 import { FormularioBusquedaParada } from "./components/FormularioBusquedaParada";
 
 function App() {
   const numeroParada = 151;
   const APIparada = "https://api.tmb.cat/v1/ibus/stops/";
-  const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
   const appId = "47477a69";
   const appKey = "47f5463a34dce827b9368dc2e35202f5";
+  const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
+  const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
+
 
   const paradas = [
     {
@@ -35,7 +37,21 @@ function App() {
       "t-in-min": 21,
     },
   ];
-  const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
+
+  const ParadasTMB = async (urlAPI, numparada, appId, appKey) => {
+    const direccionURL =
+      urlAPI + numparada + "?app_id=" + appId + "&app_key=" + appKey;
+    const resp = await fetch(direccionURL);
+    const Paradas = await resp.json();
+    console.log(Paradas.data.ibus);
+    return Paradas.data.ibus;
+  };
+  
+  useEffect(
+    () => ParadasTMB(APIparada, numeroParada, appId, appKey),
+    [APIparada, numeroParada, appId, appKey]
+  );
+
   const existeParada = async (urlAPI, appId, appKey, numeroParada) => {
     const response = await fetch(
       `${urlAPI}${numeroParada}?app_id=${appId}&app_key=${appKey}`
@@ -48,6 +64,7 @@ function App() {
     }
     return true;
   };
+  
   const getParadas = async (e, parada) => {
     e.preventDefault();
     const resultado = await existeParada(
