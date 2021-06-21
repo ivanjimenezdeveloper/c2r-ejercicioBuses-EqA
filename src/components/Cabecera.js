@@ -23,9 +23,9 @@ export const Cabecera = (props) => {
   );
 
   return (
-
+<>
       <DisplayParadas paradas={paradas}/>
-      <TiempoLinea />
+      <TiempoLinea/>
 
     <header className="cabecera">
       <h1>Parada nº 15</h1>
@@ -48,10 +48,9 @@ export const Cabecera = (props) => {
       </div>
       <TiempoLinea
         paradaSeleccionada={paradaSeleccionada}
-        tiempoEspera={tiempoEspera}
-      />
+        tiempoEspera={tiempoEspera}/>
     </header>
-
+</>
   );
 };
 
