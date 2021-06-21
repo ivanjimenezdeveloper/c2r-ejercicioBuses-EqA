@@ -24,5 +24,6 @@ yarn-error.log*
 
 #caches
 *.iml
+/.eslintcache
 .eslintcache
 .cache
