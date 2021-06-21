@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const TiempoLinea = (props) => {
   const { paradaSeleccionada, tiempoEspera } = props;
   return (
@@ -5,4 +7,9 @@ export const TiempoLinea = (props) => {
       Tiempo para la línea {paradaSeleccionada}: {tiempoEspera}
     </h2>
   );
+};
+
+TiempoLinea.propTypes = {
+  paradaSeleccionada: PropTypes.string.isRequired,
+  tiempoEspera: PropTypes.string.isRequired,
 };
