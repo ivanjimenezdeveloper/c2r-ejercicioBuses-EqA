@@ -1,14 +1,9 @@
-import { useState, useEffect, useRef } from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
+import { useState, useEffect } from "react";
 
 export const DisplayParadas = (props) => { 
-  const [posicion, setPosicion] = useState("0");
-  useEffect(() => {
-    setTimeout(() => setPosicion("-60px"), 2000);
-  }, []);
-    const paradas = [
 
+ const [listaLineas, setLineas] = useState(
+   [
     {
       routeId: "0681",
       line: "68",
@@ -34,28 +29,37 @@ export const DisplayParadas = (props) => {
       "t-in-min": 21,
 
     }
-      ];
+      ]
+ );
 
-     return (
-
-            <header className="cabecera">
-                <h1>Parada nº{paradas.routeId}</h1> 
-                <div className="display"> 
-                  <div className="carousel" style={{
-                                            top: posicion.current,
-                                            }}>
-                        {paradas.map((paradas) => 
-                        <div className="bus">
-                              <span className="linea">{paradas.line}</span>
-                              <span className="destino">{paradas.destination}</span>
-                              <span className="tiempo">{paradas["t-in-min"]}min</span>
-                          </div>
-                        )}
-                  </div>
-                </div>
-            </header>   
-            
-     );
-    };
-
-
+  const [posicion, setPosicion] = useState("0px");
+  const maxPosition = listaLineas.length;
+  const [contador, setContador] = useState(0);
+  useEffect(() => listaLineas.map(() => {
+        if (contador === maxPosition) {
+          setContador(0);
+          setPosicion("0px");
+        } else {
+          setPosicion(`${posicion - 30}px`);
+          setContador(contador + 1);
+        }
+      }),
+    [contador, listaLineas, maxPosition, posicion]
+  );
+return (
+<>
+  <h1>Parada nº15</h1> 
+    <div className="display">
+      <div className="carousel" style={{ top: posicion }}>
+        {listaLineas.map((linea) => (
+          <div key={linea.line} className="bus">
+            <span className="linea">{linea.line}</span>
+            <span className="destino">{linea.destination}</span>
+            <span className="tiempo">{linea["text-ca"]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </>  
+  );
+};
