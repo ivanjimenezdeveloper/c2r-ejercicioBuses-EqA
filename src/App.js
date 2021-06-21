@@ -5,38 +5,21 @@ import { FormularioBusquedaParada } from "./components/FormularioBusquedaParada"
 function App() {
   const numeroParada = 151;
   const APIparada = "https://api.tmb.cat/v1/ibus/stops/";
+  const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
   const appId = "47477a69";
   const appKey = "47f5463a34dce827b9368dc2e35202f5";
-  const APIExisteParada = "https://api.tmb.cat/v1/transit/parades/";
-  const [paradaSeleccionada, setParadaSeleccionada] = useState("68");
+  const [paradaSeleccionada, setParadaSeleccionada] = useState("");
 
-
-  const paradas = [
+  const [paradas, setParadas] = useState([
     {
-      routeId: "0681",
-      line: "68",
-      "text-ca": "10 min",
-      "t-in-s": 638,
-      destination: "Hospital Clínic",
-      "t-in-min": 10,
+      routeId: "",
+      line: "",
+      "text-ca": "",
+      "t-in-s": 0,
+      destination: "",
+      "t-in-min": 0,
     },
-    {
-      routeId: "0781",
-      line: "78",
-      "text-ca": "19 min",
-      "t-in-s": 1149,
-      destination: "Estació de Sants",
-      "t-in-min": 19,
-    },
-    {
-      routeId: "0671",
-      line: "67",
-      "text-ca": "21 min",
-      "t-in-s": 1288,
-      destination: "Pl. Catalunya",
-      "t-in-min": 21,
-    },
-  ];
+  ]);
 
   const ParadasTMB = async (urlAPI, numparada, appId, appKey) => {
     const direccionURL =
@@ -46,11 +29,6 @@ function App() {
     console.log(Paradas.data.ibus);
     return Paradas.data.ibus;
   };
-  
-  useEffect(
-    () => ParadasTMB(APIparada, numeroParada, appId, appKey),
-    [APIparada, numeroParada, appId, appKey]
-  );
 
   const existeParada = async (urlAPI, appId, appKey, numeroParada) => {
     const response = await fetch(
@@ -64,7 +42,7 @@ function App() {
     }
     return true;
   };
-  
+
   const getParadas = async (e, parada) => {
     e.preventDefault();
     const resultado = await existeParada(
@@ -79,8 +57,11 @@ function App() {
         ? "aqui tienes la parada " + parada
         : "no existe la parada " + parada
     );
+    if (resultado) {
+      setParadas(await ParadasTMB(APIparada, parada, appId, appKey));
+    }
   };
-
+  useEffect(() => setParadaSeleccionada(paradas[0].line), [paradas]);
   return (
     <div className="contenedor">
       <Cabecera paradas={paradas} paradaSeleccionada={paradaSeleccionada} />
