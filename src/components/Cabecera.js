@@ -26,9 +26,9 @@ export const Cabecera = (props) => {
       <DisplayParadas paradas={paradas} />
       <TiempoLinea
         paradaSeleccionada={paradaSeleccionada}
-        tiempoEspera={tiempoEspera}
-      />
+        tiempoEspera={tiempoEspera}/>
     </header>
+
   );
 };
 
